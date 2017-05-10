@@ -27,7 +27,8 @@ void PID::UpdateError(double cte) {
 }
 
 double PID::TotalError() {
-	std::cout << p_error << " " << Kp*p_error << " " << Ki*i_error << " " << Kd*d_error << std::endl;
+  // DEBUG
+	// std::cout << p_error << " " << Kp*p_error << " " << Ki*i_error << " " << Kd*d_error << std::endl;
 	return Kp*p_error + Ki*i_error + Kd*d_error;
 }
 

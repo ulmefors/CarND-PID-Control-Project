@@ -43,6 +43,9 @@ int main()
   // derivative controller steers according to change in error to avoid overshoot
   double K_d = -5.0;
 
+  // search K_p value to correct for error (1/2 order of magnitude increase)
+  // if correction is strong enough but overshoots, search better solution by increasing K_d
+  // no integral K_i value needed since there is no steering bias
   // initialize steering controller
   pid.Init(K_p, K_i, K_d);
 
