@@ -32,7 +32,7 @@ int main()
 {
   uWS::Hub h;
 
-  PID pid;
+  PID steering_pid;
 
   // proportional controller steers back to center with angle proportional to positional error
   double K_p = -0.2;
@@ -47,13 +47,13 @@ int main()
   // if correction is strong enough but overshoots, search better solution by increasing K_d
   // no integral K_i value needed since there is no steering bias
   // initialize steering controller
-  pid.Init(K_p, K_i, K_d);
+  steering_pid.Init(K_p, K_i, K_d);
 
   // speed controller
   PID speed_pid;
   speed_pid.Init(-0.20, -0.00003, -1);
 
-  h.onMessage([&pid, &speed_pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+  h.onMessage([&steering_pid, &speed_pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -72,8 +72,8 @@ int main()
           double steer_value = 0;
 
           // steering value
-          pid.UpdateError(cte);
-          steer_value = pid.TotalError();
+          steering_pid.UpdateError(cte);
+          steer_value = steering_pid.TotalError();
           if (steer_value > 1.0) steer_value = 1.0;
           if (steer_value < -1.0) steer_value = -1.0;
 
