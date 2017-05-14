@@ -18,9 +18,11 @@ The derivative controller operates on the error rate of change. If the error is 
  
 ### Parameter Optimization
 
-The optimal PID parameters are found by manual tuning starting with the proportional parameter. A small value (e.g. E-6) is selected and iterative trials are made while increasing `K_p` by steps of e.g. 0.5 or 1.0 orders of magnitude. The controller will eventually steer the vehicle back to the lane center but will probably overshoot the track center and begin to oscillate from left to right. The oscillation can be mitigated by increasing the derivative parameter `K_d` using the same methodology.
+The optimal PID parameters are found by manual tuning starting with the proportional parameter. A small value (e.g. E-6 or E-9) is selected and iterative trials are made while increasing `K_p` by steps of e.g. 0.5 or 1.0 orders of magnitude. The controller will eventually steer the vehicle back to the lane center but will probably overshoot the track center and begin to oscillate from left to right. The oscillation can be mitigated by increasing the derivative parameter `K_d` using the same methodology. There is no steering bias in the simulator which means that the integral parameter `K_i` can be set to zero.
 
-With increasing speed the vehicle travels further between every telemetry event. Consequently, the controller must react quicker which may require increased values for both proportional and derivative parameters `K_p` and `K_d`.
+### Reflections
+
+With increasing speed the vehicle travels further between every telemetry event. Consequently, the controller must react quicker which may require increased values for both proportional and derivative parameters `K_p` and `K_d`. One way to increase average speed while staying on the road at all times would be to use the speed controller to increase straight driving speed and reduce speed through the corners. For example, large steering magnitude could reduce target speed or throttle value. 
 
 ## Speed controller
 
